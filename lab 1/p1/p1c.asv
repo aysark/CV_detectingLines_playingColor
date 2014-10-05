@@ -1,0 +1,12 @@
+% Aysar Khalid
+% Problem 1: Detecting Lines
+% The following function completes task (7)
+function [ ] = p1c( I_c, C_max_edge_points_ids, F)
+    F = F-1;
+    fillline(C_max_edge_points_ids
+    I_c(intersect(find(I_c), C_max_edge_points_ids)) = 0;
+    D = 3;
+    N = 1;
+    p1b(I_c, D, N, F);
+end
+

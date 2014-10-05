@@ -1,0 +1,15 @@
+% Aysar Khalid
+% Problem 1: Detecting Lines
+% The following function completes calls 
+function [ ] = p1a(  )
+    D = 3;
+    N = 1;
+    
+    %I = rgb2gray(imread('images/small.png'));
+    I = rgb2gray(imresize(imread('images/b_rect22.jpg'),0.15));
+    
+    I_c = edge(I,'canny');
+    
+    p1b(I, I_c, D, N);
+end
+

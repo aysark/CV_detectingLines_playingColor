@@ -21,15 +21,16 @@ function [inliers, L] = lineptdist(L, X, t)
     p1 = L(:,1);
     p2 = L(:,2);
     
-    npts = length(X);
+    npts = size(X,1)*size(X,2);
     d = zeros(npts, 1);
     
     for i = 1:npts
-        p3 = X(:,i);
+        [p3_i,p3_j] = ind2sub(size(X), i);
+        p3 = [p3_j;p3_i;1];
       
         lambda = dot((p2 - p1), (p2-p3)) / dot( (p1-p2), (p1-p2) );
+        d(i) = ceil(norm(lambda*p1 + (1-lambda)*p2 - p3));
         
-        d(i) = norm(lambda*p1 + (1-lambda)*p2 - p3);
-    end
+    end    
+    inliers = find(abs(d) == t);
     
-    inliers = find(abs(d) < t);
