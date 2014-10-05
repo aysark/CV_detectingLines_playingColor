@@ -9,9 +9,13 @@ function [ ] = p1b(I_c, D, N, F)
      C_max_edge_points_ids = 0;
      for m=1:N
          display(sprintf('--- Iteration %d',m));
+         
+         % Select to edge points at random
          p1_id =randsample(find(I_c),1);
          p2_id =randsample(find(I_c),1);
-         while (p2_id == p1_id) %ensure both points are different
+         
+         % Ensure both points are different
+         while (p2_id == p1_id)
             p2_id = randsample(find(I_c),1);
          end
          if (p1_id > p2_id)
@@ -25,6 +29,8 @@ function [ ] = p1b(I_c, D, N, F)
          % sanity check that p1 and p2 belong to line
          %dot(line, [p2_i,p2_j,1]) 
          distfn = @lineptdist;
+         
+         % Get edge points within D pixels from line
          [points_within_D, M] = feval(distfn, [p1_j p2_j; p1_i p2_i; 1 1], I_c, D);
          C = intersect(find(I_c),points_within_D);
          if (length(C) > C_max)
@@ -45,7 +51,6 @@ function [ ] = p1b(I_c, D, N, F)
      
      % plot canny edge
      figure;
-%      subplot(1,2,2);
      imshow(I_c,'InitialMagnification','fit');
      title('Canny edge');
      hold on;
@@ -61,13 +66,15 @@ function [ ] = p1b(I_c, D, N, F)
          % plot our edge points
          plot(C_max_edge_points(1,:),C_max_edge_points(2,:), 'mo');
          
-         % plot fitting line
+         % overlay fitting line on image
          yy = (-abc(1) / abc(2))*C_max_edge_points(1,:) + (-abc(3) / abc(2));
          plot(C_max_edge_points(1,:),yy, 'Color','r','LineStyle','-','LineWidth',3);
          yy2 = (-abc2(1) / abc2(2))*C_max_edge_points(1,:) + (-abc2(3) / abc2(2));
          plot(C_max_edge_points(1,:),yy2, 'Color','g','LineStyle','-','LineWidth',2);
+         
+         % remove and detect next line
          if (F > 1)
-            p1c(I_c, abc2, C_max_edge_points_ids, F);
+            p1c(I_c, abc, C_max_edge_points, F);
          end
      else
          display('No edge points found');

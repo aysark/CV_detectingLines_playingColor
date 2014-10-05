@@ -1,13 +1,24 @@
 % Aysar Khalid
 % Problem 1: Detecting Lines
-% The following function completes sets up the args to the main function
+% The following function sets up the args to the main function (p1b)
+% D is the threshold or # of pixels that must be within the line
+% N is the number of iterations, more iterations = better results
+% F is the number of lines to find, the more lines the better the ability to
+% detect features
+% NOTE: if using F > 1 then you must update the D, N inputs in p1c.m to be
+% same as p1a inputs.
+
 function [ ] = p1a(  )
     close all;
     D = 3;
-    N = 10;
-    F = 5;
+    N = 100;
+    F = 4;
+    
+    %Uncomment an I to test different images
+%     I = rgb2gray(imread('images/small.png'));
 %     I = rgb2gray(imread('images/small2.png'));
     I = rgb2gray(imresize(imread('images/b_rect22.jpg'),0.15));
+    
     imshow(I,'InitialMagnification','fit');
     title('Original'); 
     
