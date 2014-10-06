@@ -21,12 +21,16 @@ function [ ] = p1c( I_c, abc, C_max_edge_points, F)
         end
         if (r-1 > 0)
             I_c(r-1,c) = 0;
+            I_c(r-1,c-1) = 0;
+            I_c(r-1,c+1) = 0;
         end
         if (c-1 > 0)
             I_c(r,c-1) = 0;
         end
         if (r+1 < size(I_c,1))
             I_c(r+1,c) = 0;
+            I_c(r+1,c+1) = 0;
+            I_c(r+1,c-1) = 0;
         end
         if (c+1 < size(I_c,2))
             I_c(r,c+1) = 0;

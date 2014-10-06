@@ -2,19 +2,22 @@
 % Problem 2: Playing with Color
 % The following function implements task (3)
 function [ ] = p3( )
+    %close all;
 %     original_image = 'images/surf_small.png';
     original_image = 'images/ironman.jpg';
     I = imread(original_image);
+    h = fspecial('gaussian');
+    I = imfilter(I,h,'replicate');
     bins = 299;
     non_skin_value = 0.2;
     % sample various types of skins to build a diverse skin histogram
     skin_histogram = p2('images/skin.jpg', zeros(300), bins, 0);
-    skin_histogram = p2('images/skin2.jpg', skin_histogram, bins, 0);
-    skin_histogram = p2('images/skin3.jpg', skin_histogram, bins, 0);
-    skin_histogram = p2('images/skin4.jpg', skin_histogram, bins, 0);
-    skin_histogram = p2('images/skin5.jpg', skin_histogram, bins, 0);
-    skin_histogram = p2('images/skin6.jpg', skin_histogram, bins, 0);
-    skin_histogram = p2('images/skin7.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin2.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin3.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin4.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin5.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin6.jpg', skin_histogram, bins, 0);
+%     skin_histogram = p2('images/skin7.jpg', skin_histogram, bins, 0);
     
     [H S V] = rgb_to_hsv(original_image);
     
@@ -23,6 +26,8 @@ function [ ] = p3( )
     
     for col=1:cols
         for row=1:rows
+            % if the skin color
+            % is same as skin color of original image
             hist_r = int32(H(row,col) * bins) + 1;
             hist_c = int32(S(row,col) * bins) + 1;
             if (hist_r > 0) && (hist_c > 0)
@@ -42,17 +47,15 @@ function [ ] = p3( )
     mono_image(:,:,2) = S;
     mono_image(:,:,3) = mono_image_v;
     mono_image_path = 'images/skin_highlighted.jpg';
-    mono_image_rgb = hsv2rgb(mono_image);
-    imwrite(mono_image_rgb,mono_image_path);
+    imwrite(hsv2rgb(mono_image),mono_image_path);
+    close all;
     
     figure;
     imshow(I);
     title('Original Image');
     
     figure;
-    h = fspecial('gaussian',[3 3],5);
-    mono_image_smooth = imfilter(mono_image_rgb,h);
-    imshow(mono_image_smooth);
+    imshow(mono_image_path);
     title('Skin Highlighted');
 end
 

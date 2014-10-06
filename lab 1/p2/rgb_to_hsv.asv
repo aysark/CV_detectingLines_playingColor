@@ -2,7 +2,6 @@
 % Problem 2: Playing with Color
 % The following function implements task (1)
 function [H,S,V ] = rgb_to_hsv(image_path)
-    %rgb_to_hsv('images/2x2.png');
     %image_path = 'images/2x2.png';
     rgb_image = im2double(imread(image_path));
     r = rgb_image(:,:,1);
@@ -40,5 +39,8 @@ function [H,S,V ] = rgb_to_hsv(image_path)
         S(i) = s;
         V(i) = v;
     end
+    H
+    S
+    V
 end
 
